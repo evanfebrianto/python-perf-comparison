@@ -48,7 +48,10 @@ Ensure you have the required dependencies installed for each implementation. You
 poetry install
 ```
 
-### 2. Compile C Extension
+### 2. Install PyPy
+To run the PyPy implementation, you need to install PyPy. You can download it from the official PyPy website or use your system's package manager.
+
+### 3. Compile C Extension
 Navigate to the c-ext directory and compile the C extension.
 ```
 cd c-ext
@@ -56,7 +59,7 @@ python setup.py build_ext --inplace
 cd ..
 ```
 
-### 3. Compile Cython Extension
+### 4. Compile Cython Extension
 Navigate to the cython directory and compile the Cython extension.
 ```
 cd cython
@@ -64,7 +67,7 @@ python setup.py build_ext --inplace
 cd ..
 ```
 
-### 4. Compile Rust Projects
+### 5. Compile Rust Projects
 Ensure you have Rust installed. Compile the Rust projects.
 ```
 # Rust Pure
@@ -90,6 +93,10 @@ This script will run the sum of squares computation 100 times for each method, c
 ## 1. Normal Python
 * File: sum_of_squares.py
 * Description: Basic implementation of the sum of squares computation in Python.
+
+## 2. Pypy
+* File: sum_of_squares.py
+* Description: Implementation using PyPy, an alternative implementation of Python with a JIT compiler.
 
 ## 2. C Extension
 * Files: c-ext/c_ext_test.py, c-ext/sum_of_squares.c, c-ext/setup.py
@@ -122,4 +129,4 @@ As shown in the chart, the Rust implementation (both pure and with Python bindin
 ## Performance Improvement Comparison
 ![Performance Improvement Comparison](performance_improvement_comparison.png)
 
-This chart illustrates the performance improvement of each method relative to the basic Python implementation. The Rust implementation (pure) offers the most significant improvement, followed by the C extension and Cython implementations. Numba and Rust binding also provide a notable performance boost, while the pure Python implementation lags behind the optimized methods.
+This chart illustrates the performance improvement of each method relative to the basic Python implementation. The Rust implementation (pure) offers the most significant improvement, followed by the C extension and Cython implementations. Numba binding also provides a notable performance boost, while the pure Python implementation lags behind the optimized methods.
