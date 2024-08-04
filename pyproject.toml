@@ -11,6 +11,7 @@ cython = "^3.0.10"
 setuptools = "^72.1.0"
 numba = "^0.60.0"
 maturin = "^1.7.0"
+plotly = "^5.23.0"
 
 
 [build-system]
