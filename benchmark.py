@@ -30,6 +30,7 @@ def measure_execution_times():
     # Command to run each implementation
     commands = {
         "Normal Python": f"python sum_of_squares.py",
+        "Pypy": f"pypy sum_of_squares.py",
         "C Extension": f"python c-ext/c_ext_test.py",
         "Cython": f"python cython/cython_test.py",
         "Numba": f"python numba/numba_test.py",
@@ -87,8 +88,8 @@ def plot_execution_times(average_times):
         ),
         plot_bgcolor='rgba(240,240,240,0.5)',
         paper_bgcolor='rgba(0,0,0,0)',
-        height=600,
-        margin=dict(l=0, r=0, t=100, b=0),
+        width=1000,
+        margin=dict(l=50, r=150, t=100, b=50),
         xaxis=dict(
             title=dict(text='Execution Time (seconds)', font=dict(size=16)),
             showgrid=True,
@@ -176,7 +177,8 @@ def plot_performance_comparison(average_times):
         plot_bgcolor='rgba(240,240,240,0.5)',
         paper_bgcolor='rgba(0,0,0,0)',
         height=600,
-        margin=dict(l=0, r=0, t=100, b=0),
+        width=1000,
+        margin=dict(l=50, r=150, t=100, b=50),
         xaxis=dict(
             title=dict(text='Performance Improvement (%)', font=dict(size=16)),
             showgrid=True,
