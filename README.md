@@ -116,8 +116,10 @@ The `benchmark.py` script uses Plotly to generate an interactive bar chart compa
 
 ## Execution Times Comparison
 ![Execution Times Comparison](execution_times_comparison.png)
+
 As shown in the chart, the Rust implementation (both pure and with Python bindings) outperforms all other methods, with the C extension and Cython implementations also providing significant performance improvements over the basic Python implementation.
 
 ## Performance Improvement Comparison
 ![Performance Improvement Comparison](performance_improvement_comparison.png)
+
 This chart illustrates the performance improvement of each method relative to the basic Python implementation. The Rust implementation (pure) offers the most significant improvement, followed by the C extension and Cython implementations. Numba and Rust binding also provide a notable performance boost, while the pure Python implementation lags behind the optimized methods.
