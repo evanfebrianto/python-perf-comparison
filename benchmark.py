@@ -2,6 +2,7 @@ import subprocess
 import time
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import plotly.io as pio
 import statistics
 
 def run_command(command, runs=10):
@@ -32,7 +33,7 @@ def measure_execution_times():
         "C Extension": f"python c-ext/c_ext_test.py",
         "Cython": f"python cython/cython_test.py",
         "Numba": f"python numba/numba_test.py",
-        "Rust (Pure)": f"./rust_pure/target/release/rust_pure",  # Assuming you've built it
+        "Rust (Pure)": f"./rust_pure/target/release/rust_pure",
         "Rust (Python)": f"python rust_python/rust_python_test.py"
     }
 
@@ -49,7 +50,7 @@ def measure_execution_times():
 
 
 def plot_execution_times(average_times):
-    """Plot the average execution times using Plotly with a more modern and appealing design."""
+    """Plot the average execution times using Plotly with improved design."""
     methods = list(average_times.keys())
     times = list(average_times.values())
     
@@ -60,8 +61,8 @@ def plot_execution_times(average_times):
     # Create color scale
     colors = [f'rgb({int(255 * (1 - i/len(methods)))}, {int(100 + 155 * (i/len(methods)))}, 255)' for i in range(len(methods))]
     
-    # Create subplots with custom spacing
-    fig = make_subplots(rows=1, cols=2, column_widths=[0.7, 0.3], horizontal_spacing=0.05)
+    # Create figure with a single plot
+    fig = go.Figure()
     
     # Add bar chart
     fig.add_trace(go.Bar(
@@ -74,25 +75,12 @@ def plot_execution_times(average_times):
         marker=dict(color=colors, line=dict(width=1, color='rgba(0,0,0,0.3)')),
         hoverinfo='text',
         hovertext=[f'{method}<br>{time:.4f} s' for method, time in zip(methods, times)],
-    ), row=1, col=1)
-    
-    # Add lollipop chart
-    for method, time, color in zip(methods, times, colors):
-        fig.add_trace(go.Scatter(
-            x=[time, time],
-            y=[method, method],
-            mode='markers+lines',
-            line=dict(color=color, width=2),
-            marker=dict(symbol='circle', size=10, color=color, line=dict(width=2, color='rgba(0,0,0,0.3)')),
-            showlegend=False,
-            hoverinfo='text',
-            hovertext=f'{method}<br>{time:.4f} s',
-        ), row=1, col=2)
+    ))
     
     # Update layout
     fig.update_layout(
         title=dict(
-            text='Execution Time Comparison:<br>Sum of Squares Implementation',
+            text='Execution Time Comparison: Sum of Squares Implementation',
             font=dict(size=24, color='rgba(0,0,0,0.8)'),
             x=0.5,
             y=0.95,
@@ -112,17 +100,6 @@ def plot_execution_times(average_times):
             showgrid=False,
             zeroline=False,
         ),
-        xaxis2=dict(
-            range=[0, max(times) * 1.1],
-            showgrid=False,
-            zeroline=False,
-            showticklabels=False,
-        ),
-        yaxis2=dict(
-            showgrid=False,
-            zeroline=False,
-            showticklabels=False,
-        ),
         showlegend=False,
         annotations=[
             dict(
@@ -137,20 +114,22 @@ def plot_execution_times(average_times):
         ],
     )
     
-    # Add a subtle shadow effect
+    # Add logo
     fig.add_layout_image(
         dict(
-            source="https://images.plot.ly/language-icons/api-home/python-logo.png",
+            source="https://python.org/static/community_logos/python-logo-master-v3-TM.png",
             xref="paper", yref="paper",
-            x=1.05, y=1.05,
-            sizex=0.2, sizey=0.2,
+            x=1, y=1,
+            sizex=0.1, sizey=0.1,
             xanchor="right", yanchor="top",
-            opacity=0.05,
-            layer="below"
+            opacity=0.8,
+            layer="above"
         )
     )
 
-    fig.show()
+    # Save the plot
+    pio.write_image(fig, "execution_times_comparison.png")
+    pio.write_html(fig, "execution_times_comparison.html")
 
 def plot_performance_comparison(average_times):
     """Plot the performance comparison of methods against the baseline (Normal Python)."""
@@ -189,7 +168,7 @@ def plot_performance_comparison(average_times):
     # Update layout
     fig.update_layout(
         title=dict(
-            text='Performance Improvement Comparison<br>(Relative to Normal Python)',
+            text='Performance Improvement Comparison (Relative to Normal Python)',
             font=dict(size=24, color='rgba(0,0,0,0.8)'),
             x=0.5,
             y=0.95,
@@ -225,20 +204,22 @@ def plot_performance_comparison(average_times):
         ],
     )
     
-    # Add a subtle shadow effect
+    # Add logo
     fig.add_layout_image(
         dict(
-            source="https://images.plot.ly/language-icons/api-home/python-logo.png",
+            source="https://python.org/static/community_logos/python-logo-master-v3-TM.png",
             xref="paper", yref="paper",
-            x=1.05, y=1.05,
-            sizex=0.2, sizey=0.2,
+            x=1, y=1,
+            sizex=0.1, sizey=0.1,
             xanchor="right", yanchor="top",
-            opacity=0.05,
-            layer="below"
+            opacity=0.8,
+            layer="above"
         )
     )
 
-    fig.show()
+    # Save the plot
+    pio.write_image(fig, "performance_improvement_comparison.png")
+    pio.write_html(fig, "performance_improvement_comparison.html")
 
 if __name__ == "__main__":
     average_times = measure_execution_times()
